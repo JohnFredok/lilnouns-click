@@ -68,10 +68,7 @@ async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> Result<Respo
       _ => String::new(),
     };
 
-    return Response::from_json(&UrlPayload {
-      url,
-      sqid: Some(sqid.clone()),
-    });
+    return Response::redirect(url.parse().unwrap());
   }
 
   Response::error("Bad Request", 400)
