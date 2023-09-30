@@ -84,7 +84,7 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
   if let Ok(payload) = req.json::<UrlPayload>().await {
     let url = Url::parse(&*payload.url).expect("Invalid URL");
 
-    match url.host_str() {
+    return match url.host_str() {
       Some("lilnouns.wtf") | Some("www.lilnouns.wtf") => {
         let segments: Vec<_> = url
           .path_segments()
@@ -106,10 +106,10 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
           numbers.push(segments[1].parse::<u32>().unwrap().try_into().unwrap());
         }
 
-        return Response::from_json(&UrlPayload {
+        Response::from_json(&UrlPayload {
           url: url.into(),
           sqid: Some(sqids.encode(&*numbers).unwrap()),
-        });
+        })
       }
       Some("lilnouns.proplot.wtf") | Some("www.lilnouns.proplot.wtf") => {
         numbers.push(Community::LilNouns as u64);
@@ -127,13 +127,13 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
           return Response::error("Bad Request", 400);
         }
 
-        return Response::from_json(&UrlPayload {
+        Response::from_json(&UrlPayload {
           url: url.into(),
           sqid: Some(sqids.encode(&*numbers).unwrap()),
-        });
+        })
       }
-      _ => return Response::error("Bad Request", 400),
-    }
+      _ => Response::error("Bad Request", 400),
+    };
   } else {
     Response::error("Bad Request", 400).unwrap();
   }
