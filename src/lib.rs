@@ -42,7 +42,6 @@ async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> Result<Respo
   if let Some(sqid) = ctx.param("sqid") {
     let sqids = Sqids::default();
     let numbers = sqids.decode(&sqid);
-    let mut url = String::new();
 
     let community = match numbers[0] {
       1 => Some(LilNouns),
@@ -56,15 +55,18 @@ async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> Result<Respo
       _ => None,
     };
 
-    if community == Some(LilNouns) {
-      if platform == Some(Ethereum) {
-        url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
-      } else if platform == Some(PropLot) {
-        url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
-      } else if platform == Some(MetaGov) {
-        url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
+    let url = match (community, platform) {
+      (Some(LilNouns), Some(Ethereum)) => {
+        format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2])
       }
-    }
+      (Some(LilNouns), Some(PropLot)) => {
+        format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2])
+      }
+      (Some(LilNouns), Some(MetaGov)) => {
+        format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2])
+      }
+      _ => String::new(),
+    };
 
     return Response::from_json(&UrlPayload {
       url,
