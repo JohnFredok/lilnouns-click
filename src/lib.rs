@@ -36,8 +36,36 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
       if let Some(sqid) = ctx.param("sqid") {
         let sqids = Sqids::default();
         let numbers = sqids.decode(&sqid);
+        let mut url = String::new();
 
-        console_debug!("{:?}", numbers)
+        let community = match numbers[0] {
+          1 => Some(LilNouns),
+          _ => None,
+        };
+
+        let platform = match numbers[1] {
+          1 => Some(Ethereum),
+          2 => Some(PropLot),
+          3 => Some(MetaGov),
+          _ => None,
+        };
+
+        if community == Some(LilNouns) {
+          if platform == Some(Ethereum) {
+            url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
+          } else if platform == Some(PropLot) {
+            url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
+          } else if platform == Some(MetaGov) {
+            url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
+          }
+        }
+
+        console_debug!("{:?}", url);
+
+        return Response::from_json(&UrlPayload {
+          url,
+          sqid: Some(sqid.clone()),
+        });
       }
 
       Response::error("Bad Request", 400)
