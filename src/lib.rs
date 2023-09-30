@@ -3,18 +3,23 @@ use sqids::Sqids;
 use url::Url;
 use worker::{console_debug, event, Context, Env, Request, Response, Result, Router};
 
+use crate::{
+  Community::LilNouns,
+  Platform::{Ethereum, MetaGov, PropLot},
+};
+
 #[derive(Debug, Serialize, Deserialize)]
 struct UrlPayload {
   pub url: String,
   pub sqid: Option<String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum Community {
   LilNouns = 1,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum Platform {
   Ethereum = 1,
   PropLot = 2,
