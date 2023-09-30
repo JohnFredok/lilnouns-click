@@ -11,8 +11,10 @@ wasm-opt = false
 crate-type = ["cdylib"]
 
 [dependencies]
+sqids = "0.3.0"
 url = "2.4.1"
 worker = "0.0.18"
+serde = { version = "1.0.188", features = ["derive"] }
 
 [profile.release]
 lto = true
