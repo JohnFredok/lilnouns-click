@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use sqids::Sqids;
 use url::Url;
-use worker::{event, Context, Env, Request, Response, Result, RouteContext, Router};
+use worker::{event, Context, Env, Request, Response, ResponseBody, Result, RouteContext, Router};
 
 use crate::{
   Community::LilNouns,
@@ -68,7 +68,28 @@ async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> Result<Respo
       _ => String::new(),
     };
 
-    return Response::redirect(url.parse().unwrap());
+    let html_doc = format!(
+      "
+        <html>
+            <head>
+                <title>Your Site Title</title>
+                \
+       <meta property=\"og:title\" content=\"Your Site Title\" />
+                <meta property=\"og:description\" \
+       content=\"A description of your site.\" />
+                <meta property=\"og:image\" content=\"https://your-site.com/image.png\" \
+       />
+                <meta property=\"og:url\" content=\"{}\" />
+                <meta http-equiv=\"refresh\" content=\"5; url={}\" />
+            </head>
+            <body>
+                <h1>Redirecting...</h1>
+            </body>
+        </html>",
+      url, url
+    );
+
+    return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
   }
 
   Response::error("Bad Request", 400)
