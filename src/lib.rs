@@ -72,21 +72,41 @@ async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> Result<Respo
       "
         <html>
             <head>
-                <title>Your Site Title</title>
-                \
-       <meta property=\"og:title\" content=\"Your Site Title\" />
-                <meta property=\"og:description\" \
-       content=\"A description of your site.\" />
-                <meta property=\"og:image\" content=\"https://your-site.com/image.png\" \
-       />
-                <meta property=\"og:url\" content=\"{}\" />
-                <meta http-equiv=\"refresh\" content=\"5; url={}\" />
+              <title>{}</title>
+              <meta name=\"description\" content=\"{}\">
+
+              <meta property=\"og:url\" content=\"{}\">
+              <meta property=\"og:type\" content=\"website\">
+              <meta property=\"og:title\" content=\"{}\">
+              <meta property=\"og:description\" content=\"{}\">
+              <meta property=\"og:image\" content=\"{}\">
+
+              <meta name=\"twitter:card\" content=\"summary_large_image\">
+              <meta property=\"twitter:domain\" content=\"{}\">
+              <meta property=\"twitter:url\" content=\"{}\">
+              <meta name=\"twitter:title\" content=\"{}\">
+              <meta name=\"twitter:description\" content=\"{}\">
+              <meta name=\"twitter:image\" content=\"{}\">
+
+              <meta http-equiv=\"refresh\" content=\"5; url={}\" />
+
             </head>
             <body>
                 <h1>Redirecting...</h1>
             </body>
         </html>",
-      url, url
+      "Lil Nouns",
+      "Lil Nouns are just like Nouns, but Lil!",
+      url,
+      "Your Site Title",
+      "A description of your site.",
+      "https://your-site.com/image.png",
+      "lilnouns.click",
+      url,
+      "Your Site Title",
+      "A description of your site.",
+      "https://your-site.com/image.png",
+      url,
     );
 
     return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
