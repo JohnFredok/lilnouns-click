@@ -97,12 +97,12 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
         }
 
         if segments[1] == "nounsdao" {
-          numbers.push(Community::LilNouns as u64);
-          numbers.push(Platform::MetaGov as u64);
+          numbers.push(LilNouns as u64);
+          numbers.push(MetaGov as u64);
           numbers.push(segments[2].parse::<u32>().unwrap().try_into().unwrap());
         } else {
-          numbers.push(Community::LilNouns as u64);
-          numbers.push(Platform::Ethereum as u64);
+          numbers.push(LilNouns as u64);
+          numbers.push(Ethereum as u64);
           numbers.push(segments[1].parse::<u32>().unwrap().try_into().unwrap());
         }
 
@@ -112,7 +112,7 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
         })
       }
       Some("lilnouns.proplot.wtf") | Some("www.lilnouns.proplot.wtf") => {
-        numbers.push(Community::LilNouns as u64);
+        numbers.push(LilNouns as u64);
 
         let segments: Vec<_> = url
           .path_segments()
@@ -121,8 +121,8 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
           .collect();
 
         if segments[0] == "idea" {
-          numbers.push(Community::LilNouns as u64);
-          numbers.push(Platform::PropLot as u64);
+          numbers.push(LilNouns as u64);
+          numbers.push(PropLot as u64);
         } else {
           return Response::error("Bad Request", 400);
         }
