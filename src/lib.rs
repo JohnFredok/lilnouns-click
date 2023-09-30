@@ -134,8 +134,6 @@ async fn handle_creation<D>(mut req: Request, _ctx: RouteContext<D>) -> Result<R
       }
       _ => Response::error("Bad Request", 400),
     };
-  } else {
-    Response::error("Bad Request", 400).unwrap();
   }
 
   Response::error("Bad Request", 400)
