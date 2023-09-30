@@ -273,6 +273,7 @@ dependencies = [
 name = "nounish-pro"
 version = "1.0.0-alpha.0"
 dependencies = [
+ "url",
  "worker",
 ]
 
