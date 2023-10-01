@@ -1,0 +1,25 @@
+fragment ProposalFragment on Proposal {
+    id
+    createdBlock
+    startBlock
+    endBlock
+    proposalThreshold
+    quorumVotes
+    forVotes
+    againstVotes
+    abstainVotes
+    title
+    description
+    status
+    executionETA
+    totalSupply
+    minQuorumVotesBPS
+    maxQuorumVotesBPS
+    quorumCoefficient
+}
+
+query NounsProposalQuery($id: ID!) {
+    proposal(id: $id) {
+        ...ProposalFragment
+    }
+}
