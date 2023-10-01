@@ -2,6 +2,7 @@ use worker::{event, Context, Env, Request, Response, Result, Router};
 
 mod queries;
 mod routes;
+mod utils;
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
