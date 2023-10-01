@@ -69,7 +69,21 @@ pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String,
     None => return Err("Error message".into()),
   };
 
-  Ok((proposal.title, proposal.description, "".to_string()))
+  let mut title = proposal.title;
+  if title.len() > 60 {
+    title.truncate(55);
+    title.push_str("...");
+  }
+
+  let mut description = proposal.description;
+  if description.len() > 160 {
+    description.truncate(155);
+    description.push_str("...");
+  }
+
+  let image = "".to_string();
+
+  Ok((title, description, image))
 }
 
 pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, String)> {
@@ -88,7 +102,21 @@ pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, 
     None => return Err("Error message".into()),
   };
 
-  Ok((idea.title, idea.tldr, "".to_string()))
+  let mut title = idea.title;
+  if title.len() > 60 {
+    title.truncate(55);
+    title.push_str("...");
+  }
+
+  let mut description = idea.tldr;
+  if description.len() > 160 {
+    description.truncate(155);
+    description.push_str("...");
+  }
+
+  let image = "".to_string();
+
+  Ok((title, description, image))
 }
 
 pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, String)> {
@@ -105,5 +133,19 @@ pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, 
     None => return Err("Error message".into()),
   };
 
-  Ok((proposal.title, proposal.description, "".to_string()))
+  let mut title = proposal.title;
+  if title.len() > 60 {
+    title.truncate(55);
+    title.push_str("...");
+  }
+
+  let mut description = proposal.description;
+  if description.len() > 160 {
+    description.truncate(155);
+    description.push_str("...");
+  }
+
+  let image = "".to_string();
+
+  Ok((title, description, image))
 }
