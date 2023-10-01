@@ -3,9 +3,12 @@ use sqids::Sqids;
 use url::Url;
 use worker::{Request, Response, ResponseBody, RouteContext};
 
-use crate::routes::{
-  Community::LilNouns,
-  Platform::{Ethereum, MetaGov, PropLot},
+use crate::{
+  queries::{fetch_lil_nouns_data, fetch_meta_gov_data, fetch_prop_lot_data},
+  routes::{
+    Community::LilNouns,
+    Platform::{Ethereum, MetaGov, PropLot},
+  },
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -43,17 +46,23 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       _ => None,
     };
 
-    let url = match (community, platform) {
+    let (url, title, description, image) = match (community, platform) {
       (Some(LilNouns), Some(Ethereum)) => {
-        format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2])
+        let url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
+        let (title, description, image) = fetch_lil_nouns_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
       }
       (Some(LilNouns), Some(PropLot)) => {
-        format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2])
+        let url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
+        let (title, description, image) = fetch_prop_lot_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
       }
       (Some(LilNouns), Some(MetaGov)) => {
-        format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2])
+        let url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
+        let (title, description, image) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
       }
-      _ => String::new(),
+      _ => (String::new(), String::new(), String::new(), String::new()),
     };
 
     let html_doc = format!(
@@ -69,13 +78,6 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
               <meta property=\"og:description\" content=\"{}\">
               <meta property=\"og:image\" content=\"{}\">
 
-              <meta name=\"twitter:card\" content=\"summary_large_image\">
-              <meta property=\"twitter:domain\" content=\"{}\">
-              <meta property=\"twitter:url\" content=\"{}\">
-              <meta name=\"twitter:title\" content=\"{}\">
-              <meta name=\"twitter:description\" content=\"{}\">
-              <meta name=\"twitter:image\" content=\"{}\">
-
               <meta http-equiv=\"refresh\" content=\"5; url={}\" />
 
             </head>
@@ -83,18 +85,7 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
                 <h1>Redirecting...</h1>
             </body>
         </html>",
-      "Lil Nouns",
-      "Lil Nouns are just like Nouns, but Lil!",
-      url,
-      "Your Site Title",
-      "A description of your site.",
-      "https://your-site.com/image.png",
-      "lilnouns.click",
-      url,
-      "Your Site Title",
-      "A description of your site.",
-      "https://your-site.com/image.png",
-      url,
+      title, description, url, title, description, image, url,
     );
 
     return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
