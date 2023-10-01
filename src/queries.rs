@@ -3,7 +3,7 @@ use log::{debug, error};
 use reqwest::Client;
 use worker::{Env, Result};
 
-use crate::utils::truncate_and_clean_string;
+use crate::utils::{create_og_image, truncate_and_clean_string};
 
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -73,7 +73,7 @@ pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String,
 
   let title = truncate_and_clean_string(proposal.title.as_str(), 55);
   let description = truncate_and_clean_string(proposal.description.as_str(), 155);
-  let image = "".to_string();
+  let image = create_og_image(&title, &description);
 
   Ok((title, description, image))
 }
@@ -96,7 +96,7 @@ pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, 
 
   let title = truncate_and_clean_string(idea.title.as_str(), 55);
   let description = truncate_and_clean_string(idea.description.as_str(), 155);
-  let image = "".to_string();
+  let image = create_og_image(&title, &description);
 
   Ok((title, description, image))
 }
@@ -117,7 +117,7 @@ pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, 
 
   let title = truncate_and_clean_string(proposal.title.as_str(), 55);
   let description = truncate_and_clean_string(proposal.description.as_str(), 155);
-  let image = "".to_string();
+  let image = create_og_image(&title, &description);
 
   Ok((title, description, image))
 }

@@ -1,5 +1,6 @@
 use regex::Regex;
 use unidecode::unidecode;
+use urlencoding::encode;
 
 pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
   // Check if the first line contains "#"
@@ -48,4 +49,39 @@ pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
   } else {
     remaining_text
   }
+}
+
+pub fn create_og_image(title: &str, meta: &str) -> String {
+  let cloudinary_id = "nekofar"; // Add your Cloudinary account ID here
+  let mut url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
+
+  url.push_str("/b_rgb:D4D7E1");
+
+  // Composed Image Transformations
+  url.push_str("/w_1600,h_836,q_100");
+
+  // TITLE
+  // Google font
+  url.push_str(&format!(
+    "/l_text:Londrina Solid_72_bold:{},co_rgb:000000,c_fit,w_1400,h_240",
+    encode(title)
+  ));
+
+  // Positioning
+  url.push_str("/fl_layer_apply,g_south_west,x_100,y_280");
+
+  // META
+  // Same font, but smaller
+  url.push_str(&format!(
+    "/l_text:Londrina Solid_48:{},co_rgb:00000080,c_fit,w_1400",
+    encode(meta)
+  ));
+
+  // Positioning
+  url.push_str("/fl_layer_apply,g_south_west,x_100,y_100");
+
+  // BG
+  url.push_str("/blank.png");
+
+  url
 }
