@@ -58,27 +58,27 @@ pub fn create_og_image(title: &str, meta: &str) -> String {
   url.push_str("/b_rgb:D4D7E1");
 
   // Composed Image Transformations
-  url.push_str("/w_1600,h_836,q_100");
+  url.push_str("/w_1200,h_630,q_100");
 
   // TITLE
   // Google font
   url.push_str(&format!(
-    "/l_text:Londrina Solid_72_bold:{},co_rgb:000000,c_fit,w_1400,h_240",
+    "/l_text:Londrina Solid_60_bold:{},co_rgb:000000,c_fit,w_1100,h_200",
     encode(title)
   ));
 
   // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_100,y_280");
+  url.push_str("/fl_layer_apply,g_south_west,x_50,y_210");
 
   // META
   // Same font, but smaller
   url.push_str(&format!(
-    "/l_text:Londrina Solid_48:{},co_rgb:00000080,c_fit,w_1400",
+    "/l_text:Londrina Solid_40:{},co_rgb:00000080,c_fit,w_1100",
     encode(meta)
   ));
 
   // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_100,y_100");
+  url.push_str("/fl_layer_apply,g_south_west,x_50,y_70");
 
   // BG
   url.push_str("/blank.png");
