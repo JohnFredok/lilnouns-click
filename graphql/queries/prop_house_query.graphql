@@ -1,0 +1,35 @@
+fragment AuctionFragment on Auction {
+    id
+    title
+    startTime
+    proposalEndTime
+    votingEndTime
+    currencyType
+    description
+    numWinners
+    createdDate
+    balanceBlockTag
+    displayComments
+    status
+}
+
+fragment ProposalFragment on Proposal {
+    address
+    id
+    title
+    what
+    tldr
+    createdDate
+}
+
+query PropHouseAuctionQuery($id: Int!) {
+    auction(id: $id) {
+        ...AuctionFragment
+    }
+}
+
+query PropHouseProposalQuery($id: Int!) {
+    proposal(id: $id) {
+        ...ProposalFragment
+    }
+}
