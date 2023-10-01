@@ -3,6 +3,8 @@ use log::{debug, error};
 use reqwest::Client;
 use worker::{Env, Result};
 
+use crate::utils::truncate_and_clean_string;
+
 #[derive(GraphQLQuery)]
 #[graphql(
   schema_path = "graphql/schemas/lil_nouns_schema.graphql",
@@ -69,18 +71,8 @@ pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String,
     None => return Err("Error message".into()),
   };
 
-  let mut title = proposal.title;
-  if title.len() > 60 {
-    title.truncate(55);
-    title.push_str("...");
-  }
-
-  let mut description = proposal.description;
-  if description.len() > 160 {
-    description.truncate(155);
-    description.push_str("...");
-  }
-
+  let title = truncate_and_clean_string(proposal.title.as_str(), 55);
+  let description = truncate_and_clean_string(proposal.description.as_str(), 155);
   let image = "".to_string();
 
   Ok((title, description, image))
@@ -102,18 +94,8 @@ pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, 
     None => return Err("Error message".into()),
   };
 
-  let mut title = idea.title;
-  if title.len() > 60 {
-    title.truncate(55);
-    title.push_str("...");
-  }
-
-  let mut description = idea.tldr;
-  if description.len() > 160 {
-    description.truncate(155);
-    description.push_str("...");
-  }
-
+  let title = truncate_and_clean_string(idea.title.as_str(), 55);
+  let description = truncate_and_clean_string(idea.description.as_str(), 155);
   let image = "".to_string();
 
   Ok((title, description, image))
@@ -133,18 +115,8 @@ pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, 
     None => return Err("Error message".into()),
   };
 
-  let mut title = proposal.title;
-  if title.len() > 60 {
-    title.truncate(55);
-    title.push_str("...");
-  }
-
-  let mut description = proposal.description;
-  if description.len() > 160 {
-    description.truncate(155);
-    description.push_str("...");
-  }
-
+  let title = truncate_and_clean_string(proposal.title.as_str(), 55);
+  let description = truncate_and_clean_string(proposal.description.as_str(), 155);
   let image = "".to_string();
 
   Ok((title, description, image))
