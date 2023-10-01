@@ -1,5 +1,6 @@
 use worker::{event, Context, Env, Request, Response, Result, Router};
 
+mod queries;
 mod routes;
 
 #[event(fetch)]
