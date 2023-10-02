@@ -26,6 +26,7 @@ unidecode = "0.3.0"
 url = "2.4.1"
 worker = "0.0.18"
 percent-encoding = "2.3.0"
+html-minifier = "4.0.0"
 
 [profile.release]
 lto = true
