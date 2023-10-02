@@ -1,6 +1,6 @@
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use regex::Regex;
 use unidecode::unidecode;
-use urlencoding::encode;
 
 pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
   // Check if the first line contains "#"
@@ -56,29 +56,27 @@ pub fn create_og_image(title: &str, description: &str) -> String {
   let cloudinary_url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
 
   let title_encoded = format!(
-    "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
-    encode("Londrina Solid"),
-    encode(&*encode(title))
+    "/l_text:{}_50_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
+    utf8_percent_encode("Londrina Solid", NON_ALPHANUMERIC),
+    utf8_percent_encode(title, NON_ALPHANUMERIC)
   );
 
   let description_encoded = format!(
-    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1000",
-    encode("Londrina Solid"),
-    encode(&*encode(description))
+    "/l_text:{}_30:{},co_rgb:00000080,c_fit,w_1000",
+    utf8_percent_encode("Londrina Solid", NON_ALPHANUMERIC),
+    utf8_percent_encode(description, NON_ALPHANUMERIC)
   );
 
   let parts = vec![
     &cloudinary_url,
     "/b_rgb:D4D7E1",
     "/c_scale,h_630,w_1200",
-    "/q_100",
+    "/l_black_noggle/c_scale,w_300/e_screen,fl_layer_apply,g_north",
     &title_encoded,
     "/fl_layer_apply,g_south_west,x_100,y_230",
     &description_encoded,
     "/fl_layer_apply,g_south_west,x_100,y_70",
-    "/l_black_noggle",
-    "/c_scale,w_300",
-    "/fl_layer_apply,g_north",
+    "/f_auto,q_auto:eco",
     "/blank.png",
   ];
 
