@@ -63,17 +63,17 @@ pub fn create_og_image(title: &str, meta: &str) -> String {
   // TITLE
   // Google font
   url.push_str(&format!(
-    "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1100,h_200",
+    "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
     encode("Londrina Solid"), encode(title)
   ));
 
   // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_50,y_210");
+  url.push_str("/fl_layer_apply,g_south_west,x_100,y_230");
 
   // META
   // Same font, but smaller
   url.push_str(&format!(
-    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1100",
+    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1000",
     encode("Londrina Solid"), encode(meta)
   ));
 
