@@ -1,3 +1,4 @@
+use html_escape::encode_safe;
 use html_minifier::minify;
 use serde::{Deserialize, Serialize};
 use sqids::Sqids;
@@ -115,20 +116,20 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
         </html>
     "#,
       url,
-      html_escape::encode_text(&title),
-      html_escape::encode_text(&description),
+      encode_safe(&title),
+      encode_safe(&description),
       image,
       image,
-      html_escape::encode_text(&title),
+      encode_safe(&title),
       url,
-      html_escape::encode_text(&title),
-      html_escape::encode_text(&description),
+      encode_safe(&title),
+      encode_safe(&description),
       image,
       url,
-      html_escape::encode_text(&title),
-      html_escape::encode_text(&description),
+      encode_safe(&title),
+      encode_safe(&description),
       url,
-      html_escape::encode_text(&title),
+      encode_safe(&title),
     );
 
     let minified_html = minify(html_doc).expect("Failed to minify HTML");
