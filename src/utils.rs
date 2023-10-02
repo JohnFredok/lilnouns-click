@@ -52,19 +52,24 @@ pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
 }
 
 pub fn create_og_image(title: &str, description: &str) -> String {
+  let non_alpha_numeric = Regex::new("[^a-zA-Z0-9 .]").unwrap();
+
+  let title = non_alpha_numeric.replace_all(title, "");
+  let description = non_alpha_numeric.replace_all(description, "");
+
   let cloudinary_id = "nekofar";
   let cloudinary_url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
 
   let title_encoded = format!(
-    "/l_text:{}_50_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
+    "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
     utf8_percent_encode("Londrina Solid", NON_ALPHANUMERIC),
-    utf8_percent_encode(title, NON_ALPHANUMERIC)
+    utf8_percent_encode(&title, NON_ALPHANUMERIC)
   );
 
   let description_encoded = format!(
-    "/l_text:{}_30:{},co_rgb:00000080,c_fit,w_1000",
+    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1000",
     utf8_percent_encode("Londrina Solid", NON_ALPHANUMERIC),
-    utf8_percent_encode(description, NON_ALPHANUMERIC)
+    utf8_percent_encode(&description, NON_ALPHANUMERIC)
   );
 
   let parts = vec![
