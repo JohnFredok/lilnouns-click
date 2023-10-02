@@ -1,0 +1,21 @@
+fragment IdeaFragment on Idea {
+    id
+    title
+    tldr
+    description
+    creatorId
+    createdAtBlock
+    votecount
+    createdAt
+    closed
+    consensus
+    deleted
+}
+
+query PropLotIdeaQuery($id: Int!) {
+    getIdea(options: {
+        ideaId: $id
+    }) {
+        ...IdeaFragment
+    }
+}

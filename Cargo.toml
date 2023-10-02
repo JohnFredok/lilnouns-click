@@ -1,0 +1,35 @@
+[package]
+name = "nounish-pro"
+version = "1.0.0-alpha.0"
+authors = ["Milad Nekofar <milad@nekofar.com>"]
+edition = "2021"
+description = "A Nounish URL shortener for LilNouns DAO."
+repository = "https://github.com/lilnouns/lilnouns-click"
+license = "Apache-2.0"
+include = ["*.graphql"]
+
+# https://github.com/rustwasm/wasm-pack/issues/1247
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+graphql_client = { version = "0.13.0", features = ["reqwest"] }
+html-escape = { version = "0.2.13", default-features = false }
+html-minifier = { version = "4.0.0", default-features = false }
+log = { version = "0.4.20", features = [] }
+percent-encoding = "2.3.0"
+regex = "1.9.6"
+reqwest = "0.11.20"
+serde = { version = "1.0.188", features = ["derive"] }
+sqids = "0.3.0"
+unidecode = "0.3.0"
+url = "2.4.1"
+worker = "0.0.18"
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
