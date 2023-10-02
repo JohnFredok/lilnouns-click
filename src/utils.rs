@@ -78,7 +78,10 @@ pub fn create_og_image(title: &str, meta: &str) -> String {
   ));
 
   // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_50,y_70");
+  url.push_str("/fl_layer_apply,g_south_west,x_100,y_70");
+
+  // Add noggle to the north 
+  url.push_str("/l_black_noggle,g_north,w_300");
 
   // BG
   url.push_str("/blank.png");
