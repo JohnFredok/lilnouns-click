@@ -63,8 +63,8 @@ pub fn create_og_image(title: &str, meta: &str) -> String {
   // TITLE
   // Google font
   url.push_str(&format!(
-    "/l_text:Londrina Solid_60_bold:{},co_rgb:000000,c_fit,w_1100,h_200",
-    encode(title)
+    "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1100,h_200",
+    encode("Londrina Solid"), encode(title)
   ));
 
   // Positioning
@@ -73,8 +73,8 @@ pub fn create_og_image(title: &str, meta: &str) -> String {
   // META
   // Same font, but smaller
   url.push_str(&format!(
-    "/l_text:Londrina Solid_40:{},co_rgb:00000080,c_fit,w_1100",
-    encode(meta)
+    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1100",
+    encode("Londrina Solid"), encode(meta)
   ));
 
   // Positioning
