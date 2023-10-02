@@ -51,40 +51,36 @@ pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
   }
 }
 
-pub fn create_og_image(title: &str, meta: &str) -> String {
-  let cloudinary_id = "nekofar"; // Add your Cloudinary account ID here
-  let mut url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
+pub fn create_og_image(title: &str, description: &str) -> String {
+  let cloudinary_id = "nekofar";
+  let cloudinary_url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
 
-  url.push_str("/b_rgb:D4D7E1");
-
-  // Composed Image Transformations
-  url.push_str("/w_1200,h_630,q_100");
-
-  // TITLE
-  // Google font
-  url.push_str(&format!(
+  let title_encoded = format!(
     "/l_text:{}_60_bold:{},co_rgb:000000,c_fit,w_1000,h_200",
-    encode("Londrina Solid"), encode(title)
-  ));
+    encode("Londrina Solid"),
+    encode(&*encode(title))
+  );
 
-  // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_100,y_230");
-
-  // META
-  // Same font, but smaller
-  url.push_str(&format!(
+  let description_encoded = format!(
     "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1000",
-    encode("Londrina Solid"), encode(meta)
-  ));
+    encode("Londrina Solid"),
+    encode(&*encode(description))
+  );
 
-  // Positioning
-  url.push_str("/fl_layer_apply,g_south_west,x_100,y_70");
+  let parts = vec![
+    &cloudinary_url,
+    "/b_rgb:D4D7E1",
+    "/c_scale,h_630,w_1200",
+    "/q_100",
+    &title_encoded,
+    "/fl_layer_apply,g_south_west,x_100,y_230",
+    &description_encoded,
+    "/fl_layer_apply,g_south_west,x_100,y_70",
+    "/l_black_noggle",
+    "/c_scale,w_300",
+    "/fl_layer_apply,g_north",
+    "/blank.png",
+  ];
 
-  // Add noggle to the north 
-  url.push_str("/l_black_noggle,g_north,w_300");
-
-  // BG
-  url.push_str("/blank.png");
-
-  url
+  parts.join("")
 }
