@@ -194,8 +194,8 @@ pub async fn handle_creation<D>(
           .collect();
 
         if segments[0] == "idea" {
-          numbers.push(LilNouns as u64);
           numbers.push(PropLot as u64);
+          numbers.push(segments[1].parse::<u32>().unwrap().try_into().unwrap());
         } else {
           return Response::error("Bad Request", 400);
         }
