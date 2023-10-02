@@ -105,7 +105,7 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
         <body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; font-family: 'Londrina Solid', cursive;">
             <div style="text-align: center;">
                 <div style="padding: 20px;">
-                    <img src="https://lilnouns.wtf/static/media/lil-loading-skull.b7a846e1.gif" alt="Loading Skull" style="width: 300px; height: 300px;">
+                    <img src="https://lilnouns.wtf/static/media/lil-loading-skull.b7a846e1.gif" alt="Loading Skull" style="width: 192px; height: 192px;">
                     <p style="margin-top: 10px; font-size: 24px; font-weight: bold;">Redirecting...</p>
                 </div>
             </div>
