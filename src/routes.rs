@@ -108,6 +108,7 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
                 <div style="padding: 20px;">
                     <img src="https://lilnouns.wtf/static/media/lil-loading-skull.b7a846e1.gif" alt="Loading Skull" style="width: 192px; height: 192px;">
                     <p style="margin-top: 10px; font-size: 24px; font-weight: bold;">Redirecting...</p>
+                    <p><a style="font-size: 24px; text-decoration: none;" href="{}">{}</a></p>
                 </div>
             </div>
         </body>
@@ -125,7 +126,9 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       image,
       url,
       title,
-      description
+      description,
+      url,
+      title,
     );
 
     let minified_html = minify(html_doc).expect("Failed to minify HTML");
