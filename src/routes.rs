@@ -1,3 +1,4 @@
+use html_minifier::minify;
 use serde::{Deserialize, Serialize};
 use sqids::Sqids;
 use url::Url;
@@ -127,7 +128,17 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       description
     );
 
-    return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
+    let minified_html = minify(html_doc).expect("Failed to minify HTML");
+
+    let response = Response::from_body(ResponseBody::Body(minified_html.as_bytes().to_vec()));
+
+    return match response {
+      Ok(mut res) => {
+        res.headers_mut().set("Content-Type", "text/html").unwrap();
+        return Ok(res);
+      }
+      Err(e) => Err(e),
+    };
   }
 
   Response::error("Bad Request", 400)
