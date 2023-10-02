@@ -73,11 +73,25 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+            <meta property="og:site_name" content="Lil Nouns">
             <meta property="og:url" content="{}">
             <meta property="og:type" content="website">
             <meta property="og:title" content="{}">
             <meta property="og:description" content="{}">
+
             <meta property="og:image" content="{}">
+            <meta property="og:image:secure_url" content="{}" />
+            <meta property="og:image:type" content="image/png" />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content="{}" />
+
+            <meta name="twitter:card" content="summary_large_image">
+            <meta property="twitter:domain" content="lilnouns.click">
+            <meta property="twitter:url" content="{}">
+            <meta name="twitter:title" content="{}">
+            <meta name="twitter:description" content="{}">
+            <meta name="twitter:image" content="{}">
 
             <meta http-equiv="refresh" content="3; url={}" />
 
@@ -98,7 +112,19 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
         </body>
         </html>
     "#,
-      url, title, description, image, url, title, description
+      url,
+      title,
+      description,
+      image,
+      image,
+      title,
+      url,
+      title,
+      description,
+      image,
+      url,
+      title,
+      description
     );
 
     return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
