@@ -64,28 +64,37 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       }
       _ => (String::new(), String::new(), String::new(), String::new()),
     };
-
+    
     let html_doc = format!(
-      "
-        <html>
-            <head>
-              <title>{}</title>
-              <meta name=\"description\" content=\"{}\">
+      r#"
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-              <meta property=\"og:url\" content=\"{}\">
-              <meta property=\"og:type\" content=\"website\">
-              <meta property=\"og:title\" content=\"{}\">
-              <meta property=\"og:description\" content=\"{}\">
-              <meta property=\"og:image\" content=\"{}\">
+            <meta property="og:url" content="{}">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="{}">
+            <meta property="og:description" content="{}">
+            <meta property="og:image" content="{}">
 
-              <meta http-equiv=\"refresh\" content=\"5; url={}\" />
+            <meta http-equiv="refresh" content="5; url={}" />
 
-            </head>
-            <body>
-                <h1>Redirecting...</h1>
-            </body>
-        </html>",
-      title, description, url, title, description, image, url,
+            <title>{}</title>
+            <meta name="description" content="{}">
+        </head>
+        <body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0;">
+            <div style="text-align: center;">
+                <div style="padding: 20px;">
+                    <img src="https://lilnouns.wtf/static/media/lil-loading-skull.b7a846e1.gif" alt="Loading Skull" style="width: 300px; height: 300px;">
+                    <p style="margin-top: 10px; font-size: 24px; font-weight: bold;">Redirecting...</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    "#,
+      url, title, description, image, url, title, description
     );
 
     return Response::from_body(ResponseBody::Body(html_doc.as_bytes().to_vec()));
