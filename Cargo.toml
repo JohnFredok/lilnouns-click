@@ -18,16 +18,16 @@ crate-type = ["cdylib"]
 [dependencies]
 graphql_client = { version = "0.13.0", features = ["reqwest"] }
 html-escape = { version = "0.2.13", default-features = false }
+html-minifier = { version = "4.0.0", default-features = false }
 log = { version = "0.4.20", features = [] }
-reqwest = "0.11.20"
+percent-encoding = "2.3.0"
 regex = "1.9.6"
+reqwest = "0.11.20"
 serde = { version = "1.0.188", features = ["derive"] }
 sqids = "0.3.0"
 unidecode = "0.3.0"
 url = "2.4.1"
 worker = "0.0.18"
-percent-encoding = "2.3.0"
-html-minifier = "4.0.0"
 
 [profile.release]
 lto = true
