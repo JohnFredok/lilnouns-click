@@ -64,7 +64,7 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       }
       _ => (String::new(), String::new(), String::new(), String::new()),
     };
-    
+
     let html_doc = format!(
       r#"
         <!DOCTYPE html>
@@ -79,7 +79,7 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
             <meta property="og:description" content="{}">
             <meta property="og:image" content="{}">
 
-            <meta http-equiv="refresh" content="5; url={}" />
+            <meta http-equiv="refresh" content="3; url={}" />
 
             <title>{}</title>
             <meta name="description" content="{}">
