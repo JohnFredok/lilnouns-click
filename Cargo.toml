@@ -1,7 +1,12 @@
 [package]
 name = "nounish-pro"
 version = "1.0.0-alpha.0"
+authors = ["Milad Nekofar <milad@nekofar.com>"]
 edition = "2021"
+description = "A Nounish URL shortener for LilNouns DAO."
+repository = "https://github.com/lilnouns/lilnouns-click"
+license = "Apache-2.0"
+include = ["*.graphql"]
 
 # https://github.com/rustwasm/wasm-pack/issues/1247
 [package.metadata.wasm-pack.profile.release]
