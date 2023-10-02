@@ -1,0 +1,52 @@
+name: Deploy & Publish
+on:
+  release:
+    types: [ published ]
+
+jobs:
+
+  # Prepare and publish
+  deploy:
+    name: Deploy to Workers
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v4.1.0
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      # Cache dependencies to speed up builds
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3.3.2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1.0.7
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+
+      - name: Deploy to Workers
+        uses: cloudflare/wrangler-action@v3.1.1
+        with:
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: dev
+          command: deploy --env dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true

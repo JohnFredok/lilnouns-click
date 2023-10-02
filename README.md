@@ -28,4 +28,4 @@ Read more about this on the [`workers-rs`](https://github.com/cloudflare/workers
 
 ## Issues
 
-If you have any problems, please open an issue on the project issue tracker on the [this repository](https://github.com/nekofar/nounish-pro).
+If you have any problems, please open an issue on the project issue tracker on the [this repository](https://github.com/nekofar/lilnouns-click).
