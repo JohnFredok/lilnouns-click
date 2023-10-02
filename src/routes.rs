@@ -115,20 +115,20 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
         </html>
     "#,
       url,
-      title,
-      description,
+      html_escape::encode_text(&title),
+      html_escape::encode_text(&description),
       image,
       image,
-      title,
+      html_escape::encode_text(&title),
       url,
-      title,
-      description,
+      html_escape::encode_text(&title),
+      html_escape::encode_text(&description),
       image,
       url,
-      title,
-      description,
+      html_escape::encode_text(&title),
+      html_escape::encode_text(&description),
       url,
-      title,
+      html_escape::encode_text(&title),
     );
 
     let minified_html = minify(html_doc).expect("Failed to minify HTML");
