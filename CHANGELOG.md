@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-alpha.3] - 2023-10-03
+
+### Miscellaneous Tasks
+
+- Force reinstallation of `worker-build` in `wrangler.toml`
+
 ## [1.0.0-alpha.2] - 2023-10-03
 
 ### Documentation
