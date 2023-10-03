@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-alpha.2] - 2023-10-03
+
+### Documentation
+
+- Create the project LICENSE file (#3)
+
+### Miscellaneous Tasks
+
+- Update deployment command in Github Action
+- Update `deploy` script in `package.json`
+- Add environment `vars` for `dev` environment in `wrangler.toml`
+
 ## [1.0.0-alpha.1] - 2023-10-02
 
 ### Miscellaneous Tasks
