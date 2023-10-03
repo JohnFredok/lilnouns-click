@@ -3,7 +3,7 @@ main = "build/worker/shim.mjs"
 compatibility_date = "2023-03-22"
 
 [build]
-command = "cargo install -q worker-build && worker-build --release"
+command = "cargo install -q -f worker-build && worker-build --release"
 
 [vars]
 NOUNS_GRAPHQL_URL = "https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/0.2.0/gn"
