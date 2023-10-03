@@ -44,8 +44,7 @@ jobs:
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          environment: dev
-          command: deploy --env dev
+          command: deploy
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
