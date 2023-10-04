@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-alpha.6] - 2023-10-04
+
+### Refactor
+
+- Update text and background colors of og images
+
 ## [1.0.0-alpha.5] - 2023-10-04
 
 ### Miscellaneous Tasks
