@@ -67,16 +67,16 @@ pub fn create_og_image(title: &str, description: &str) -> String {
   );
 
   let description_encoded = format!(
-    "/l_text:{}_40:{},co_rgb:00000080,c_fit,w_1000",
+    "/l_text:{}_40:{},co_rgb:FFFFFF,c_fit,w_1000",
     utf8_percent_encode("Londrina Solid", NON_ALPHANUMERIC),
     utf8_percent_encode(&description, NON_ALPHANUMERIC)
   );
 
   let parts = vec![
     &cloudinary_url,
-    "/b_rgb:D4D7E1",
+    "/b_rgb:7CC4F2",
     "/c_scale,h_630,w_1200",
-    "/l_black_noggle/c_scale,w_300/e_screen,fl_layer_apply,g_north",
+    "/l_lil_noun_logo/c_scale,w_300/e_screen,fl_layer_apply,g_north,y_100",
     &title_encoded,
     "/fl_layer_apply,g_south_west,x_100,y_230",
     &description_encoded,
