@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-alpha.5] - 2023-10-04
+
+### Miscellaneous Tasks
+
+- Update pnpm version to latest in deploy workflow
+
 ## [1.0.0-alpha.4] - 2023-10-03
 
 ### Miscellaneous Tasks
