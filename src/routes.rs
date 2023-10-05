@@ -31,7 +31,7 @@ pub enum Platform {
   MetaGov = 3,
 }
 
-pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::Result<Response> {
+pub async fn handle_redirect<D>(req: Request, ctx: RouteContext<D>) -> worker::Result<Response> {
   if let Some(sqid) = ctx.param("sqid") {
     let sqids = Sqids::default();
     let numbers = sqids.decode(&sqid);
@@ -51,17 +51,35 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
     let (url, title, description, image) = match (community, platform) {
       (Some(LilNouns), Some(Ethereum)) => {
         let url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
-        let (title, description, image) = fetch_lil_nouns_data(&ctx.env, numbers[2]).await?;
+        let (title, description, _) = fetch_lil_nouns_data(&ctx.env, numbers[2]).await?;
+        let image = req
+          .url()
+          .unwrap()
+          .join(format!("{}/og.png", sqid).as_str())
+          .unwrap()
+          .to_string();
         (url, title, description, image)
       }
       (Some(LilNouns), Some(PropLot)) => {
         let url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
-        let (title, description, image) = fetch_prop_lot_data(&ctx.env, numbers[2]).await?;
+        let (title, description, _) = fetch_prop_lot_data(&ctx.env, numbers[2]).await?;
+        let image = req
+          .url()
+          .unwrap()
+          .join(format!("{}/og.png", sqid).as_str())
+          .unwrap()
+          .to_string();
         (url, title, description, image)
       }
       (Some(LilNouns), Some(MetaGov)) => {
         let url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
-        let (title, description, image) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
+        let (title, description, _) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
+        let image = req
+          .url()
+          .unwrap()
+          .join(format!("{}/og.png", sqid).as_str())
+          .unwrap()
+          .to_string();
         (url, title, description, image)
       }
       _ => (String::new(), String::new(), String::new(), String::new()),
@@ -143,6 +161,48 @@ pub async fn handle_redirect<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       }
       Err(e) => Err(e),
     };
+  }
+
+  Response::error("Bad Request", 400)
+}
+
+pub async fn handle_og_image<D>(_req: Request, ctx: RouteContext<D>) -> worker::Result<Response> {
+  if let Some(sqid) = ctx.param("sqid") {
+    let sqids = Sqids::default();
+    let numbers = sqids.decode(&sqid);
+
+    let community = match numbers[0] {
+      1 => Some(LilNouns),
+      _ => None,
+    };
+
+    let platform = match numbers[1] {
+      1 => Some(Ethereum),
+      2 => Some(PropLot),
+      3 => Some(MetaGov),
+      _ => None,
+    };
+
+    let (_, _, _, image) = match (community, platform) {
+      (Some(LilNouns), Some(Ethereum)) => {
+        let url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
+        let (title, description, image) = fetch_lil_nouns_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
+      }
+      (Some(LilNouns), Some(PropLot)) => {
+        let url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
+        let (title, description, image) = fetch_prop_lot_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
+      }
+      (Some(LilNouns), Some(MetaGov)) => {
+        let url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
+        let (title, description, image) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
+        (url, title, description, image)
+      }
+      _ => (String::new(), String::new(), String::new(), String::new()),
+    };
+
+    return Response::redirect(Url::parse(&*image)?);
   }
 
   Response::error("Bad Request", 400)
