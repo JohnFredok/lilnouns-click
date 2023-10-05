@@ -197,7 +197,7 @@ pub async fn handle_og_image<D>(_req: Request, ctx: RouteContext<D>) -> worker::
         let (title, description) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
         create_og_image(&title, &description)
       }
-      _ => (String::new(), String::new(), String::new(), String::new()),
+      _ => String::new(),
     };
 
     return Response::redirect(Url::parse(&*image)?);

@@ -3,7 +3,7 @@ use log::{debug, error};
 use reqwest::Client;
 use worker::{Env, Result};
 
-use crate::utils::{create_og_image, truncate_and_clean_string};
+use crate::utils::truncate_and_clean_string;
 
 #[derive(GraphQLQuery)]
 #[graphql(
