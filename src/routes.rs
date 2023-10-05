@@ -184,19 +184,16 @@ pub async fn handle_og_image<D>(_req: Request, ctx: RouteContext<D>) -> worker::
       _ => None,
     };
 
-    let (image) = match (community, platform) {
+    let image = match (community, platform) {
       (Some(LilNouns), Some(Ethereum)) => {
-        let url = format!("{}/{}", "https://lilnouns.wtf/vote", numbers[2]);
         let (title, description) = fetch_lil_nouns_data(&ctx.env, numbers[2]).await?;
         create_og_image(&title, &description)
       }
       (Some(LilNouns), Some(PropLot)) => {
-        let url = format!("{}/{}", "https://lilnouns.proplot.wtf/idea", numbers[2]);
         let (title, description) = fetch_prop_lot_data(&ctx.env, numbers[2]).await?;
         create_og_image(&title, &description)
       }
       (Some(LilNouns), Some(MetaGov)) => {
-        let url = format!("{}/{}", "https://lilnouns.wtf/vote/nounsdao", numbers[2]);
         let (title, description) = fetch_meta_gov_data(&ctx.env, numbers[2]).await?;
         create_og_image(&title, &description)
       }
