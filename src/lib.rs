@@ -14,6 +14,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
       Response::redirect(Url::parse("https://lilnouns.wtf")?)
     })
     .get_async("/:sqid", routes::handle_redirect)
+    .get_async("/:sqid/og.png", routes::handle_og_image)
     .post_async("/", routes::handle_creation)
     .run(req, env)
     .await

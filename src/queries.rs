@@ -57,7 +57,7 @@ async fn fetch<QueryType: GraphQLQuery>(
     .and_then(|response| response.data)
 }
 
-pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String, String)> {
+pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String)> {
   let graphql_url = env.var("LIL_NOUNS_GRAPHQL_URL")?.to_string();
   let variables = lil_nouns_proposal_query::Variables { id: id.to_string() };
 
@@ -73,12 +73,11 @@ pub async fn fetch_lil_nouns_data(env: &Env, id: u64) -> Result<(String, String,
 
   let title = truncate_and_clean_string(proposal.title.as_str(), 55);
   let description = truncate_and_clean_string(proposal.description.as_str(), 155);
-  let image = create_og_image(&title, &description);
 
-  Ok((title, description, image))
+  Ok((title, description))
 }
 
-pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, String)> {
+pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String)> {
   let graphql_url = env.var("PROP_LOT_GRAPHQL_URL")?.to_string();
   let variables = prop_lot_idea_query::Variables {
     id: id.try_into().unwrap(),
@@ -96,12 +95,11 @@ pub async fn fetch_prop_lot_data(env: &Env, id: u64) -> Result<(String, String, 
 
   let title = truncate_and_clean_string(idea.title.as_str(), 55);
   let description = truncate_and_clean_string(idea.description.as_str(), 155);
-  let image = create_og_image(&title, &description);
 
-  Ok((title, description, image))
+  Ok((title, description))
 }
 
-pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, String)> {
+pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String)> {
   let graphql_url = env.var("NOUNS_GRAPHQL_URL")?.to_string();
   let variables = nouns_proposal_query::Variables { id: id.to_string() };
 
@@ -117,7 +115,6 @@ pub async fn fetch_meta_gov_data(env: &Env, id: u64) -> Result<(String, String, 
 
   let title = truncate_and_clean_string(proposal.title.as_str(), 55);
   let description = truncate_and_clean_string(proposal.description.as_str(), 155);
-  let image = create_og_image(&title, &description);
 
-  Ok((title, description, image))
+  Ok((title, description))
 }
