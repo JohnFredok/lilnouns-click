@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-alpha.7] - 2023-10-05
+
+### Refactor
+
+- Update image url generation in redirect handling
+- Improve image handling in route and query sources
+- Remove URL formatting in image handling
+- Simplify non-matching cases in match block and remove unused import
+
 ## [1.0.0-alpha.6] - 2023-10-04
 
 ### Refactor
