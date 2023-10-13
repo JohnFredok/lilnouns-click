@@ -51,11 +51,12 @@ pub fn truncate_and_clean_string(input: &str, limit: usize) -> String {
   }
 }
 
-pub fn create_og_image(title: &str, description: &str) -> String {
+pub fn create_og_image(title: &str, description: &str, background_color: &str) -> String {
   let non_alpha_numeric = Regex::new("[^a-zA-Z0-9 .]").unwrap();
 
   let title = non_alpha_numeric.replace_all(title, "");
   let description = non_alpha_numeric.replace_all(description, "");
+  let background_color = format!("/b_rgb:{}", background_color);
 
   let cloudinary_id = "nekofar";
   let cloudinary_url = format!("https://res.cloudinary.com/{}/image/upload", cloudinary_id);
@@ -74,7 +75,7 @@ pub fn create_og_image(title: &str, description: &str) -> String {
 
   let parts = vec![
     &cloudinary_url,
-    "/b_rgb:7CC4F2",
+    &background_color,
     "/c_scale,h_630,w_1200",
     "/l_lil_noun_logo/c_scale,w_300/e_screen,fl_layer_apply,g_north,y_100",
     &title_encoded,
