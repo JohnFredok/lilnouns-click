@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-beta.2] - 2023-10-13
+
+### Features
+
+- Add unique color to each platform`s og image
+
 ## [1.0.0-alpha.7] - 2023-10-05
 
 ### Refactor
